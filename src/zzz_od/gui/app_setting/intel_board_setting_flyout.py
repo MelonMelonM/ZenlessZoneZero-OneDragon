@@ -41,6 +41,12 @@ class IntelBoardSettingFlyout(AppSettingFlyout):
         )
         layout.addWidget(self.exp_grind_switch)
 
+        self.expert_challenge_only_switch = SwitchSettingCard(
+            icon='', title='只接专业挑战室',
+            margins=self.card_margins,
+        )
+        layout.addWidget(self.expert_challenge_only_switch)
+
         self.reset_btn = PushButton(gt('重置进度'))
         self.reset_btn.clicked.connect(self._on_reset_progress)
         layout.addWidget(self.reset_btn)
@@ -62,6 +68,10 @@ class IntelBoardSettingFlyout(AppSettingFlyout):
         self.auto_battle_opt.init_with_adapter(get_prop_adapter(self.config, 'auto_battle_config'))
 
         self.exp_grind_switch.init_with_adapter(get_prop_adapter(self.config, 'exp_grind_mode'))
+
+        self.expert_challenge_only_switch.init_with_adapter(
+            get_prop_adapter(self.config, 'expert_challenge_only')
+        )
 
         self._update_auto_battle_visibility()
 

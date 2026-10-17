@@ -38,3 +38,12 @@ class IntelBoardConfig(ApplicationConfig):
     @exp_grind_mode.setter
     def exp_grind_mode(self, new_value: bool) -> None:
         self.update('exp_grind_mode', new_value)
+
+    @property
+    def expert_challenge_only(self) -> bool:
+        """是否只接取专业挑战室委托，开启后忽略恶名狩猎等其它类型"""
+        return self.get('expert_challenge_only', False)
+
+    @expert_challenge_only.setter
+    def expert_challenge_only(self, new_value: bool) -> None:
+        self.update('expert_challenge_only', new_value)

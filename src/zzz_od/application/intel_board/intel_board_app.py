@@ -118,6 +118,9 @@ class IntelBoardApp(ZApplication):
     @node_from(from_name='重置筛选')
     @operation_node(name='选择恶名狩猎')
     def select_notorious_hunt(self) -> OperationRoundResult:
+        if self.config.expert_challenge_only:
+            # 只接专业挑战室：不勾选恶名狩猎，让游戏自带筛选只显示专业挑战室
+            return self.round_success('跳过恶名狩猎')
         search_area = self.ctx.screen_loader.get_area('情报板', '搜索区域')
         return self.round_by_ocr_and_click(self.last_screenshot, '恶名狩猎', area=search_area,
                                            success_wait=0.5, retry_wait=0.5)
@@ -168,6 +171,13 @@ class IntelBoardApp(ZApplication):
                 for star_rect in stars_list
             )
         ]
+
+        # 只接专业挑战室：过滤掉恶名狩猎等其它类型
+        if self.config.expert_challenge_only:
+            valid_commissions = [
+                (text, rect) for text, rect in valid_commissions
+                if text == CommissionType.EXPERT_CHALLENGE.value
+            ]
 
         # 点击第一个有效委托
         if valid_commissions:
